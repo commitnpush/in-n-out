@@ -2,34 +2,51 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import session from 'express-session';
-import path from 'path'
+import path from 'path';
+import mongoose from 'mongoose';
+import api from './routes';
+
 const app = express();
 
-app.use(express.static(path.join(__dirname,'../../client/build')));
+/* SUPPORT CLIENT SIDE RENDERING */
+app.use(express.static(path.join(__dirname, '../../client/build')));
 
-/*use session */
-app.use(session({
-  secret: "Pass$1$234",
-  resave: false,
-  saveUninitialized:true
-}));
+/* USE SESSION */
+app.use(
+	session({
+		secret: 'Pass$1$234',
+		resave: false,
+		saveUninitialized: true
+	})
+);
 
+/* MONGODB CONNECTION */
+const db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', () => console.log('Connected to mongodb server'));
+mongoose.connect('mongodb://localhost/in-n-out');
+
+/* HTTP LOGGING */
 app.use(morgan('dev'));
+
+/* USER BODY PARSER*/
 app.use(bodyParser.json());
 
-app.use('/api', (req,res)=>{
-  res.json({"success":true});
-});
+/* API ROUTING */
+app.use('/api', api);
 
+/* SUPPORT CLIENT SIDE RENDERING */
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/build/', "index.html"));
+	res.sendFile(path.join(__dirname, '../../client/build/', 'index.html'));
 });
 
+/* SERVER ERROR HANDLING */
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Server Error");
+	console.error(err.stack);
+	res.status(500).send('Server Error');
 });
 
-app.listen(3400,() => console.log(`Server is listening on port 3400)`));
+/* SERVER START */
+app.listen(3400, () => console.log('Server is listening on port 3400)'));
 
 module.exports = app;
