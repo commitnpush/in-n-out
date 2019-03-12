@@ -5,12 +5,24 @@
   "dependencies": {
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "include-media": "^1.4.9",
+    "materialize-css": "^1.0.0-rc.2",
     "node-sass": "^4.11.0",
     "open-color": "^1.6.3",
+    "prop-types": "^15.7.2",
     "react": "^16.8.4",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-addons-update": "^15.6.2",
     "react-dom": "^16.8.4",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
-    "sass-loader": "^7.1.0"
+    "react-timeago": "^4.4.0",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.5",
+    "redux-thunk": "^2.3.0",
+    "sass-loader": "^7.1.0",
+    "timepicker": "^1.11.14"
   },
   "scripts": {
     "start": "react-scripts start",

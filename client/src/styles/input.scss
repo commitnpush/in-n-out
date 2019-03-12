@@ -1,0 +1,36 @@
+.radio-field {
+  padding-bottom: 20px !important;
+}
+
+/* OVERRIDING MATERIALIZE INPUT */
+.input-field label {
+  color: white !important;
+}
+
+.input-field input[type="text"],
+.input-field input[type="password"],
+.input-field input[type="number"] {
+  border-bottom: 1px solid white;
+}
+
+input[type="radio"]:not(:checked) + span,
+[type="radio"]:checked + span {
+  padding-left: 25px;
+  margin-left: 10px;
+}
+
+[type="radio"]:checked + span:after,
+[type="radio"].with-gap:checked + span:after {
+  background-color: white;
+}
+
+[type="radio"]:not(:checked) + span:before,
+[type="radio"]:not(:checked) + span:after {
+  border: 2px solid white;
+}
+
+[type="radio"]:checked + span:after,
+[type="radio"].with-gap:checked + span:before,
+[type="radio"].with-gap:checked + span:after {
+  border: 2px solid white;
+}

@@ -1,0 +1,35 @@
+@import "input";
+
+label.title {
+  color: white;
+  font-size: 1rem;
+}
+
+label span {
+  color: white;
+  font-size: 0.8rem !important;
+}
+
+.username,
+.ip,
+.manager {
+  margin-top: 0px !important;
+}
+
+.card-content.title {
+  padding-bottom: 0;
+  font-weight: 100;
+}
+
+input[name="in"],
+input[name="out"] {
+  cursor: pointer;
+}
+
+/* OVERRIDING MATERIALIZE INPUT */
+.card-content .btn {
+  line-height: 40px;
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+}

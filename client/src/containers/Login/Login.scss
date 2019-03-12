@@ -1,0 +1,64 @@
+@import "utils";
+.auth {
+  margin-top: 50px;
+  text-align: center;
+  &.is-not-auth {
+    margin-top: 114px;
+  }
+  .card {
+    width: 400px;
+    margin: 0 auto;
+  }
+
+  .header {
+    font-size: 18px;
+  }
+
+  .row {
+    margin-bottom: 0;
+  }
+
+  .username {
+    margin-top: 0px;
+  }
+
+  .footer {
+    border-top: 1px solid white;
+
+    span.create a {
+      margin-left: 10px;
+      color: $oc-yellow-1;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+  }
+}
+.logo {
+  text-align: center;
+  font-weight: 100;
+  font-size: 60px;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */
+}
+
+a.logo {
+  color: #5b5b5b;
+}
+
+a {
+  cursor: pointer;
+}
+
+/* OVERRIDING MATERIALIZE INPUT */
+.card-content .btn {
+  line-height: 40px;
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+}

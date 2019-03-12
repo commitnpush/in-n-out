@@ -1,0 +1,19 @@
+@import "utils";
+.search-icon {
+  font-weight: 600;
+}
+
+.brand-logo.left {
+  padding-left: 1rem !important;
+}
+
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+.brand-logo {
+  font-weight: 100;
+}
