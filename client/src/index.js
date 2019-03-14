@@ -18,13 +18,24 @@ const store = compose(
   devTools
 )(createStore)(reducers);
 
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept('./modules', () => {
+    const newRootReducer = require('./modules/index').default;
+    store.replaceReducer(newRootReducer);
+  });
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Route path="/" component={App} />
+      <Route component={App} />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
 
 serviceWorker.unregister();
+
+if (module.hot) {
+  module.hot.accept();
+}

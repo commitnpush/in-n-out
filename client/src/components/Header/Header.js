@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.scss';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
@@ -36,7 +37,11 @@ class Header extends Component {
                     </i>
                   </Link>
                 </li>
-                {this.props.isLoggedIn ? <LogoutButton /> : <LoginButton />}
+                {this.props.isLoggedIn ? (
+                  <LogoutButton onLogout={this.props.onLogout} />
+                ) : (
+                  <LoginButton />
+                )}
               </ul>
             </div>
           </div>
@@ -45,6 +50,16 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  onLogout: PropTypes.func
+};
+
+Header.defaultProps = {
+  isLoggedIn: false,
+  onLogout: () => console.error('onLogout function is not defined')
+};
 
 function LoginButton() {
   return (
@@ -56,10 +71,10 @@ function LoginButton() {
   );
 }
 
-function LogoutButton() {
+function LogoutButton({ onLogout }) {
   return (
     <li>
-      <a onClick={this.props.onSignOut}>
+      <a onClick={onLogout}>
         <i className={cx('material-icons')}>lock_open</i>
       </a>
     </li>

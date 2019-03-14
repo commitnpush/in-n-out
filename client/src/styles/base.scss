@@ -5,17 +5,14 @@ body {
   background: white;
   box-sizing: border-box;
 }
-
+.toast.error {
+  color: $oc-red-4;
+}
+.toast.success {
+  color: $oc-blue-4;
+}
 * {
   box-sizing: inherit;
-}
-
-#toast-container {
-  min-width: 10%;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center !important;
 }
 
 input.valid:not([type]),
@@ -47,4 +44,9 @@ textarea.materialize-textarea.valid:focus,
 .select-wrapper.valid > input.select-dropdown {
   border-bottom: 1px solid $oc-blue-3;
   box-shadow: 0 1px 0 0 $oc-blue-3;
+}
+
+//position
+.mt-70 {
+  margin-top: 70px;
 }

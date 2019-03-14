@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './Register.scss';
 import { Link } from 'react-router-dom';
@@ -70,16 +69,19 @@ class Register extends Component {
   _handleRegister() {
     this.props.registerRequest(this.state).then(() => {
       if (this.props.register.status === 'FAILURE') {
-        console.log(this.props.register);
         document
           .querySelector(`[name=${this.props.register.error.property}]`)
           .classList.add('invalid');
         document
           .querySelector(`[name=${this.props.register.error.property}]`)
           .classList.remove('valid');
-        M.toast({ html: this.props.register.error.msg });
+        M.toast({
+          html: this.props.register.error.msg,
+          displayLength: 2000,
+          classes: 'error'
+        });
       } else {
-        M.toast({ html: 'success~!' });
+        M.toast({ html: 'Success~!', displayLength: 1000, classes: 'success' });
         this.props.history.push('/login');
       }
     });
