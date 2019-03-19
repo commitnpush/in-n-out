@@ -5,7 +5,7 @@ class Manager extends Component {
     return <div className="mt-70">Manager</div>;
   }
 }
-
+//
 Manager.propTypes = {};
 Manager.defaultProps = {};
 export default Manager;

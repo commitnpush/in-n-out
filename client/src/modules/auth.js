@@ -36,7 +36,14 @@ const initialState = {
     status: 'INIT',
     isLoggedIn: false,
     type: false,
-    username: ''
+    username: '',
+    employee_info: {
+      is_free: false,
+      in: '',
+      out: '',
+      time: {},
+      manager: ''
+    }
   }
 };
 
@@ -73,7 +80,13 @@ export function loginRequest(username, password) {
     return axios
       .post('/api/account/login', { username, password })
       .then(response => {
-        dispatch(loginSuccess({ username, type: response.data.type }));
+        dispatch(
+          loginSuccess({
+            username,
+            type: response.data.type,
+            employee_info: response.data.employee_info
+          })
+        );
       })
       .catch(error => {
         dispatch(
@@ -87,7 +100,7 @@ export function loginRequest(username, password) {
 }
 
 export const login = createAction(LOGIN);
-export const loginSuccess = createAction(LOGIN_SUCCESS); //username, type
+export const loginSuccess = createAction(LOGIN_SUCCESS); //username, type, employee_info
 export const loginFailure = createAction(LOGIN_FAILURE); //msg, property
 
 //LOGOUT
@@ -110,8 +123,9 @@ export function infoRequest() {
       .then(response => {
         dispatch(
           infoSuccess({
-            username: response.data.info.username,
-            type: response.data.info.type
+            username: response.data.username,
+            type: response.data.type,
+            employee_info: response.data.employee_info
           })
         );
       })
@@ -122,7 +136,7 @@ export function infoRequest() {
 }
 
 export const info = createAction(INFO);
-export const infoSuccess = createAction(INFO_SUCCESS); //username, type
+export const infoSuccess = createAction(INFO_SUCCESS); //username, type, employee_info
 export const infoFailure = createAction(INFO_FAILURE);
 
 export default handleActions(
@@ -170,7 +184,8 @@ export default handleActions(
         info: {
           isLoggedIn: { $set: true },
           username: { $set: action.payload.username },
-          type: { $set: action.payload.type }
+          type: { $set: action.payload.type },
+          employee_info: { $set: action.payload.employee_info }
         }
       });
     },
@@ -211,7 +226,8 @@ export default handleActions(
           status: { $set: 'SUCCESS' },
           isLoggedIn: { $set: true },
           username: { $set: action.payload.username },
-          type: { $set: action.payload.type }
+          type: { $set: action.payload.type },
+          employee_info: { $set: action.payload.employee_info }
         }
       });
     },

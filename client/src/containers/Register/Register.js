@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import M from 'materialize-css';
 import { connect } from 'react-redux';
 import { registerRequest } from 'modules/auth';
+import axios from 'axios';
 const cx = classNames.bind(styles);
 
 class Register extends Component {
@@ -26,7 +27,7 @@ class Register extends Component {
       manager: '',
       in: '09:00',
       out: '18:00',
-      time: 0
+      duty: 0
     },
     ip: ''
   };
@@ -62,7 +63,7 @@ class Register extends Component {
       employee_info: {
         ...state.employee_info,
         [e.target.name]:
-          e.target.name === 'time' ? Number(e.target.value) : e.target.value
+          e.target.name === 'duty' ? Number(e.target.value) : e.target.value
       }
     }));
   }
@@ -81,8 +82,34 @@ class Register extends Component {
           classes: 'error'
         });
       } else {
-        M.toast({ html: 'Success~!', displayLength: 1000, classes: 'success' });
-        this.props.history.push('/login');
+        //axios file upload
+        let formData = new FormData();
+        formData.append('username', this.state.username);
+        formData.append(
+          'profile_img',
+          document.querySelector('[name="profile_img"]').files[0]
+        );
+        axios
+          .post('/api/account/upload', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then(res => {
+            M.toast({
+              html: 'Success~!',
+              displayLength: 1000,
+              classes: 'success'
+            });
+            this.props.history.push('/login');
+          })
+          .catch(error => {
+            M.toast({
+              html: '사진업로드 실패',
+              displayLength: 1000,
+              classes: 'error'
+            });
+          });
       }
     });
   }
@@ -96,6 +123,18 @@ class Register extends Component {
       }
     }));
   }
+  _handleProfileClick = () => {
+    let profile_input = document.querySelector('[name="profile_img"]');
+    profile_input.click();
+  };
+  _handleProfileSelect = e => {
+    if (e.target.files.length === 0) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('profile_img').src = e.target.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
   componentDidUpdate() {
     const in_element = document.querySelector('[name=in]');
     const in_instance = M.Timepicker.init(in_element, {
@@ -121,10 +160,13 @@ class Register extends Component {
   render() {
     return (
       <div className={cx('container', 'auth')}>
-        <Link className={cx('logo')} to="/">
-          IN & OUT
-        </Link>
+        <span className="logo">IN & OUT</span>
         <div className="card">
+          <div className="back">
+            <Link to="/login">
+              <i className="material-icons back">keyboard_backspace</i>
+            </Link>
+          </div>
           <div className="header teal lighten-1 white-text center">
             <div className="card-content title">Register</div>
             <RegisterView
@@ -136,6 +178,8 @@ class Register extends Component {
               onSubmit={this._handleRegister}
               in_time={this.state.employee_info.in}
               out_time={this.state.employee_info.out}
+              onProfileClick={this._handleProfileClick}
+              onProfileSelect={this._handleProfileSelect}
             />
           </div>
         </div>
@@ -152,7 +196,9 @@ function RegisterView({
   onChange,
   onSubmit,
   in_time,
-  out_time
+  out_time,
+  onProfileClick,
+  onProfileSelect
 }) {
   return (
     <div>
@@ -166,6 +212,8 @@ function RegisterView({
             onChange={onChange}
             in_time={in_time}
             out_time={out_time}
+            onProfileClick={onProfileClick}
+            onProfileSelect={onProfileSelect}
           />
           <a className="waves-effect waves-light btn" onClick={onSubmit}>
             회원가입
@@ -183,10 +231,34 @@ function InputBox({
   onIsFreeChange,
   onChange,
   in_time,
-  out_time
+  out_time,
+  onProfileClick,
+  onProfileSelect
 }) {
   return (
     <div>
+      <div className="upload-box">
+        <div className="thumbnail-wrapper">
+          <div className="thumbnail">
+            <div className="centered">
+              <a onClick={onProfileClick}>
+                <img
+                  id="profile_img"
+                  src="/profile/default.png"
+                  alt="default"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <input
+          type="file"
+          name="profile_img"
+          onChange={onProfileSelect}
+          accept="image/*"
+        />
+      </div>
       <div className="input-field col s12 username">
         <label>아이디</label>
         <input
@@ -297,10 +369,10 @@ function EmployeeBox({ is_free, onIsFreeChange, onChange, in_time, out_time }) {
         근무시간 <small>단위 : 분</small>
       </label>
       <input
-        name="time"
+        name="duty"
         type="number"
-        max="20"
-        min="1"
+        max="1200"
+        min="10"
         className="validate"
         onChange={onChange}
       />

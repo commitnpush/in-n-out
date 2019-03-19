@@ -97,9 +97,7 @@ class Login extends Component {
     );
     return (
       <div className={cx('container', 'auth')}>
-        <Link className="logo" to="/">
-          IN & OUT
-        </Link>
+        <span className="logo">IN & OUT</span>
         <div className={cx('card')}>
           <div className="header teal lighten-1 white-text center">
             <div className="card-content title">Login</div>

@@ -37,11 +37,11 @@ class Header extends Component {
                     </i>
                   </Link>
                 </li>
-                {this.props.isLoggedIn ? (
-                  <LogoutButton onLogout={this.props.onLogout} />
-                ) : (
-                  <LoginButton />
-                )}
+                <li>
+                  <a onClick={this.props.onLogout}>
+                    <i className={cx('material-icons')}>lock_open</i>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -60,25 +60,5 @@ Header.defaultProps = {
   isLoggedIn: false,
   onLogout: () => console.error('onLogout function is not defined')
 };
-
-function LoginButton() {
-  return (
-    <li>
-      <Link to="/login">
-        <i className={cx('material-icons')}>vpn_key</i>
-      </Link>
-    </li>
-  );
-}
-
-function LogoutButton({ onLogout }) {
-  return (
-    <li>
-      <a onClick={onLogout}>
-        <i className={cx('material-icons')}>lock_open</i>
-      </a>
-    </li>
-  );
-}
 
 export default Header;

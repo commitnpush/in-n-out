@@ -1,41 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from 'containers';
+import App from 'containers/App/App';
 import { BrowserRouter, Route } from 'react-router-dom';
-import * as serviceWorker from './serviceWorker';
 import 'styles/base.scss';
 
 //Redux
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import reducers from 'modules';
-import thunk from 'redux-thunk';
+import configureStore from 'state/store';
 
-const devTools =
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-const store = compose(
-  applyMiddleware(thunk),
-  devTools
-)(createStore)(reducers);
+const store = configureStore();
 
-if (process.env.NODE_ENV !== 'production' && module.hot) {
-  module.hot.accept('./modules', () => {
-    const newRootReducer = require('./modules/index').default;
-    store.replaceReducer(newRootReducer);
-  });
-}
+const render = Component => {
+  return ReactDOM.render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <Route component={Component} />
+      </BrowserRouter>
+    </Provider>,
+    document.getElementById('root')
+  );
+};
 
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Route component={App} />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
-);
-
-serviceWorker.unregister();
+render(App);
 
 if (module.hot) {
-  module.hot.accept();
+  module.hot.accept('./containers/App/App', () => {
+    const NextApp = require('./containers/App/App').default;
+    render(NextApp);
+  });
 }

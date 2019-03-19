@@ -1,0 +1,89 @@
+@import "utils";
+
+.button-box {
+  padding: 10px;
+}
+
+.button-box a {
+  width: 100%;
+  font-weight: 100;
+  font-size: 2rem;
+  height: 100px;
+  line-height: 100px;
+  border-radius: 1rem;
+}
+.button-box span.time {
+  font-size: 1rem;
+}
+
+.profile-box {
+  margin: 0 auto;
+}
+
+.profile-header {
+  display: flex;
+  margin-bottom: 20px;
+  img {
+    margin-right: 20px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    box-shadow: 0 3px 2px 0px rgba(0, 0, 0, 0.3);
+  }
+
+  .profile-username {
+    font-weight: 100;
+    font-size: 3rem;
+    line-height: 60px;
+    margin-right: 20px;
+  }
+
+  .today-status {
+    .content {
+      padding: 5px 10px;
+      border-radius: 10px;
+      // background-color: teal;
+      color: white;
+      margin: auto 0;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.card-row {
+  margin-top: 20px;
+  .title {
+    color: $oc-gray-7;
+    display: inline;
+    font-weight: 300;
+    font-size: 1.5rem;
+    border-bottom: 1px solid $oc-gray-5;
+    padding: 0px 5px 5px 5px;
+  }
+  .content {
+    padding: 10px 20px 0 20px;
+    table {
+      th,
+      td {
+        font-size: 1.2rem;
+      }
+      th {
+        font-weight: 400;
+        color: $oc-gray-6;
+      }
+      td {
+        font-weight: 100;
+        span.status {
+          padding: 5px 10px;
+          border-radius: 10px;
+          color: white;
+        }
+      }
+      tbody tr {
+        border-bottom: none;
+      }
+    }
+  }
+}
