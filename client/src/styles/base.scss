@@ -50,3 +50,15 @@ textarea.materialize-textarea.valid:focus,
 .mt-70 {
   margin-top: 70px;
 }
+
+.loading-spinner,
+.loading-spinner > div {
+  height: 100vh;
+}
+
+.loading-spinner svg {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+}

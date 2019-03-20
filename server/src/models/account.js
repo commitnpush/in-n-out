@@ -14,7 +14,8 @@ const Account = new Schema({
     manager: String
   },
   ip: String,
-  created: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now },
+  histories: []
 });
 
 //generate hash

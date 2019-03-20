@@ -5,14 +5,17 @@ import reducer from 'modules';
 const reduxDevTools =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
+// const configureStore = () => {
+//   const store = createStore(
+//     reducer,
+//     compose(
+//       applyMiddleware(thunk),
+//       reduxDevTools
+//     )
+//   );
+
 const configureStore = () => {
-  const store = createStore(
-    reducer,
-    compose(
-      applyMiddleware(thunk),
-      reduxDevTools
-    )
-  );
+  const store = createStore(reducer, applyMiddleware(thunk));
 
   if (process.env.NODE_ENV !== 'production') {
     if (module.hot) {

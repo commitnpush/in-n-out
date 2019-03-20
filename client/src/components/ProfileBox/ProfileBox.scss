@@ -1,0 +1,120 @@
+@import "utils";
+$break-small: 600px;
+.profile-box {
+  margin: 0 auto;
+}
+
+.profile-header {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+
+  .thumbnail-wrapper {
+    width: 100px;
+    margin-right: 20px;
+    .thumbnail {
+      position: relative;
+      padding-top: 100%; /* 1:1 ratio */
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 2px 4px 2px gray;
+      .centered {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        -webkit-transform: translate(50%, 50%);
+        -ms-transform: translate(50%, 50%);
+        transform: translate(50%, 50%);
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          max-width: 100%;
+          height: auto;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+
+  .profile-username {
+    margin-right: 20px;
+    .content {
+      font-weight: 100;
+      font-size: 3rem;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  .today-status {
+    @media screen and (max-width: $break-small) {
+      position: absolute;
+      right: 20px;
+      top: 70px;
+    }
+    line-height: 5px;
+    .label {
+      border-left: 1px solid gray;
+      @media screen and (max-width: $break-small) {
+        border-left: none;
+      }
+      font-weight: 100;
+      font-size: 1.5rem;
+      padding: 10px 10px 10px 20px;
+      position: relative;
+      top: 50px;
+      transform: translateY(-50%);
+    }
+    .content {
+      font-size: 1rem;
+      padding: 5px 10px;
+      border-radius: 10px;
+      position: relative;
+      top: 50px;
+      color: white;
+      margin: auto 0;
+      transform: translateY(-45%);
+    }
+  }
+}
+
+.card-row {
+  margin-top: 20px;
+  .title {
+    color: $oc-gray-7;
+    display: inline;
+    font-weight: 300;
+    font-size: 1.5rem;
+    border-bottom: 1px solid $oc-gray-5;
+    padding: 0px 5px 5px 5px;
+  }
+  .content {
+    padding: 10px 20px 0 20px;
+    table {
+      th,
+      td {
+        font-size: 1.2rem;
+      }
+      th {
+        font-weight: 400;
+        color: $oc-gray-6;
+      }
+      td {
+        font-weight: 100;
+        span.status {
+          padding: 5px 10px;
+          border-radius: 10px;
+          color: white;
+        }
+      }
+      tbody tr {
+        border-bottom: none;
+      }
+    }
+  }
+}

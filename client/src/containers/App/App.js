@@ -70,12 +70,12 @@ class App extends Component {
       }
     });
   };
-  componentWillMount() {
+  componentDidMount() {
     this._checkSession();
   }
 
   render() {
-    const { info, location } = this.props;
+    const { info } = this.props;
     const isAuthPage = /(\/register)|(\/login)/.test(
       this.props.location.pathname
     );

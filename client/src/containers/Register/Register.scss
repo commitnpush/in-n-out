@@ -46,33 +46,35 @@ input[name="out"] {
   border: 0;
 }
 
-.thumbnail-wrapper {
-  width: 30%;
-  margin: 0 auto;
-  .thumbnail {
-    position: relative;
-    padding-top: 100%; /* 1:1 ratio */
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 2px 4px 2px teal;
-    .centered {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      -webkit-transform: translate(50%, 50%);
-      -ms-transform: translate(50%, 50%);
-      transform: translate(50%, 50%);
-      img {
+.upload-box {
+  .thumbnail-wrapper {
+    width: 30%;
+    margin: 0 auto;
+    .thumbnail {
+      position: relative;
+      padding-top: 100%; /* 1:1 ratio */
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 2px 4px 2px teal;
+      .centered {
         position: absolute;
         top: 0;
         left: 0;
-        max-width: 100%;
-        height: auto;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        right: 0;
+        bottom: 0;
+        -webkit-transform: translate(50%, 50%);
+        -ms-transform: translate(50%, 50%);
+        transform: translate(50%, 50%);
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          max-width: 100%;
+          height: auto;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
       }
     }
   }
