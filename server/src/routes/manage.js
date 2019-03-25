@@ -101,7 +101,7 @@ router.put("/employee", async (req, res) => {
   //자신이 관리하는 계정이 아님
   if (account.employee_info.manager !== loginInfo.username) {
     res.status(403).json({
-      msg: " 관리할 수 없는 사원"
+      msg: "관리할 수 없는 사원"
     });
     return;
   }
@@ -193,7 +193,7 @@ router.put("/employee", async (req, res) => {
   //사원정보 수정
   await Account.updateOne(
     { username: employee.username },
-    { $set: { employee_info: employee.employee_info } }
+    { $set: { employee_info: employee.employee_info, ip: manager.ip } }
   );
 
   //오늘날짜 히스토리
