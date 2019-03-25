@@ -6,7 +6,7 @@ export function statusCodeToMsg(code) {
     msg = '출근 전';
     break;
   case 1:
-    msg = '출근 후';
+    msg = '출근 중';
     break;
   case 2:
     msg = '지각';
@@ -46,9 +46,8 @@ export function statusCodeToColor(code) {
 }
 
 export function getCurrentStatus(employee_info, histories) {
-  console.log(employee_info);
   //출근 전 - 0;
-  //출근 후 - 1;
+  //출근 중 - 1;
   //지각 - 2;
   //조퇴 - 3;
   //부족 - 4;
@@ -83,7 +82,7 @@ export function getCurrentStatus(employee_info, histories) {
       return 1;
     }
     //출근은 했지만 출근시간보다 출근해야하는 시간이 이전 -> 지각
-    if (moment(lastHistory.in, 'HH:mm') >= moment(employee_info.in, 'HH:mm')) {
+    if (moment(lastHistory.in, 'HH:mm') > moment(employee_info.in, 'HH:mm')) {
       return 2;
     }
     return 1;
@@ -97,7 +96,7 @@ export function getCurrentStatus(employee_info, histories) {
       moment(lastHistory.out, 'HH:mm') - moment(lastHistory.in, 'HH:mm') >=
       employee_info.duty * 60 * 1000
     ) {
-      return 5;
+      return 6;
     }
     //부족
     return 4;
@@ -107,10 +106,116 @@ export function getCurrentStatus(employee_info, histories) {
   if (moment(lastHistory.out, 'HH:mm') >= moment(employee_info.out, 'HH:mm')) {
     return 6;
   }
-  //이미 지각
-  if (moment(lastHistory.in, 'HH:mm') >= moment(employee_info.in, 'HH:mm')) {
+  //이미 지각 + 조퇴
+  if (moment(lastHistory.in, 'HH:mm') > moment(employee_info.in, 'HH:mm')) {
     return 5;
   }
   //조퇴
   return 3;
+}
+
+export function getWorkingMinute(inTime, outTime) {
+  if (inTime === '') {
+    return 0;
+  }
+  if (outTime === '') {
+    return Math.floor((moment() - moment(inTime, 'HH:mm')) / 1000 / 60);
+  }
+  return Math.floor(
+    (moment(outTime, 'HH:mm') - moment(inTime, 'HH:mm')) / 1000 / 60
+  );
+}
+
+export function getStatusColor(status) {
+  let statusColor = 'grey';
+  switch (status) {
+  case '지각':
+  case '조퇴':
+  case '지각조퇴':
+  case '부족':
+  case '결근':
+    statusColor = 'red';
+    break;
+  case '출근 전':
+  case '입사 전':
+  case '출근 중':
+    statusColor = 'blue';
+    break;
+  default:
+    statusColor = 'teal';
+  }
+  return statusColor;
+}
+
+export function getThisWeekStatus(historyData, employee_info, created) {
+  //기준날짜
+  let date = moment()
+    .subtract(1, 'days')
+    .startOf('day');
+  //이번주 월요일
+  let thisMonday = moment().startOf('isoWeek');
+  let historyIndex = 0;
+  const thisWeekStatus = [];
+
+  while (date >= thisMonday) {
+    //더이상 로그인 기록이 없거나 최근히스토리가 기준날짜보다 작을 경우
+    if (
+      typeof historyData[historyIndex] === 'undefined' ||
+      moment(historyData[historyIndex].created) < date
+    ) {
+      //입사일이 기준날짜보다 이전일 경우 -> 결근
+      if (moment(created) < date) {
+        thisWeekStatus.unshift('결근');
+      } else {
+        thisWeekStatus.unshift('입사 전');
+      }
+
+      //기록이 오늘일경우
+    } else if (
+      moment(historyData[historyIndex].created) > moment().startOf('day')
+    ) {
+      historyIndex++;
+      continue;
+    } else {
+      let status = getStatusFromTime(
+        historyData[historyIndex].in,
+        historyData[historyIndex].out,
+        employee_info
+      );
+      historyIndex++;
+      thisWeekStatus.unshift(status);
+    }
+    date.subtract(1, 'days');
+  }
+
+  return thisWeekStatus;
+}
+
+function getStatusFromTime(inTime, outTime, employee_info) {
+  if (inTime === '') {
+    return '결근';
+  }
+  //자율출퇴근제
+  if (employee_info.is_free) {
+    if (
+      moment(outTime, 'HH:mm') - moment(inTime, 'HH:mm') <
+      employee_info.duty * 60 * 1000
+    ) {
+      return '부족';
+    }
+    return '퇴근';
+  }
+
+  const { in: inDuty, out: outDuty } = employee_info;
+  if (moment(outDuty, 'HH:mm') > moment(outTime, 'HH:mm')) {
+    if (moment(inDuty, 'HH:mm') < moment(inTime, 'HH:mm')) {
+      return '지각조퇴';
+    }
+    return '조퇴';
+  }
+  //지각 체크
+  if (moment(inDuty, 'HH:mm') < moment(inTime, 'HH:mm')) {
+    return '지각';
+  }
+  return '퇴근';
 }

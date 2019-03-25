@@ -11,6 +11,9 @@ body {
 .toast.success {
   color: $oc-blue-4;
 }
+.toast.warn {
+  color: $oc-yellow-4;
+}
 * {
   box-sizing: inherit;
 }
@@ -48,7 +51,7 @@ textarea.materialize-textarea.valid:focus,
 
 //position
 .mt-70 {
-  margin-top: 70px;
+  margin-top: 80px;
 }
 
 .loading-spinner,

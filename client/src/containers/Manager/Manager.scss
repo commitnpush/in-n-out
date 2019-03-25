@@ -24,7 +24,7 @@
         max-width: 100%;
       }
       &:hover {
-        box-shadow: 0 3px 5px 1px teal;
+        box-shadow: 0 2px 5px 3px teal;
       }
     }
     .username {
@@ -78,6 +78,9 @@
     i {
       font-size: 2.5rem;
       color: $oc-gray-6;
+      &:hover {
+        color: black;
+      }
     }
   }
 }

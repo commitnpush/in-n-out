@@ -159,7 +159,7 @@ router.post("/register", async (req, res) => {
     });
   }
 
-  //CHECK employee_info.IS_FREE FORMAT
+  //CHECK employee_info.is_free FORMAT
   if (typeof req.body.employee_info.is_free !== "boolean") {
     return res.status(400).json({
       property: "is_free",
@@ -177,7 +177,7 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    const timeRegex = /^([01][0-9]|2[1-3]):[0-5][0-9]$/;
+    const timeRegex = /^([01][0-9]|2[0-3]):[0-5][0-9]$/;
     if (!timeRegex.test(req.body.employee_info.in)) {
       return res.status(400).json({
         property: "in",

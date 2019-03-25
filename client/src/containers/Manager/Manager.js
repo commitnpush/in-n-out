@@ -39,8 +39,27 @@ class Manager extends Component {
       }
     });
   };
+  _handleProfileBoxClose = () => {
+    this.setState({
+      index: -1,
+      employee: null
+    });
+  };
   componentDidMount() {
     this._getEmployees();
+  }
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.updateType) {
+      this.setState({
+        index: -1,
+        employee: null
+      });
+      return;
+    }
+    const nextEmployee = nextProps.employees.data[this.state.index];
+    this.setState({
+      employee: nextEmployee
+    });
   }
   render() {
     const { status, data } = this.props.employees;
@@ -123,10 +142,11 @@ class Manager extends Component {
           <div className="row">
             <div className="col s12">
               <ProfileBox
+                index={this.state.index}
                 info={this.state.employee}
                 histories={this.state.employee.histories}
                 inManager={true}
-                onRefresh={this._handleEmployeeRefresh}
+                onClose={this._handleProfileBoxClose}
               />
             </div>
           </div>
@@ -202,7 +222,8 @@ function Thumbnail(props) {
 }
 
 const mapStateToProps = state => ({
-  employees: state.manage.employees
+  employees: state.manage.employees,
+  updateType: state.manage.edit.updateType
 });
 
 const mapDispatchToProps = dispatch => ({
