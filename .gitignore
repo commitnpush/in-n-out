@@ -1,4 +1,7 @@
 client/node_modules
+client/build
 server/node_modules
 
 yarn-error.log
+server/upload
+!server/upload/defualt.png

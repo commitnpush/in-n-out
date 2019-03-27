@@ -51,6 +51,7 @@ input[name="out"] {
     width: 30%;
     margin: 0 auto;
     .thumbnail {
+      width: 100%;
       position: relative;
       padding-top: 100%; /* 1:1 ratio */
       border-radius: 50%;

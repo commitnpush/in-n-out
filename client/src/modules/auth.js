@@ -209,7 +209,6 @@ export default handleActions(
           status: { $set: 'INIT' }
         },
         info: {
-          status: { $set: 'INIT' },
           isLoggedIn: { $set: false },
           username: { $set: '' },
           type: { $set: false }

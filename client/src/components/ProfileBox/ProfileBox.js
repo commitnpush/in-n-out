@@ -96,7 +96,10 @@ class ProfileBox extends Component {
     );
   };
   componentWillMount() {
-    if (moment(this.props.histories[0].created) > moment().startOf('day')) {
+    if (
+      this.props.histories.length !== 0 &&
+      moment(this.props.histories[0].created) > moment().startOf('day')
+    ) {
       this.setState({
         todayHistory: this.props.histories[0],
         isLoggedIn: true
@@ -136,7 +139,10 @@ class ProfileBox extends Component {
     }));
   }
   componentWillReceiveProps(nextProps) {
-    if (moment(nextProps.histories[0].created) > moment().startOf('day')) {
+    if (
+      this.props.histories.length !== 0 &&
+      moment(nextProps.histories[0].created) > moment().startOf('day')
+    ) {
       this.setState({
         todayHistory: nextProps.histories[0],
         isLoggedIn: true
@@ -227,7 +233,10 @@ class ProfileBox extends Component {
 
     let workingTime = 0;
     //로그인 했다면
-    if (moment(this.props.histories[0].created) > moment().startOf('day')) {
+    if (
+      this.props.histories.length !== 0 &&
+      moment(this.props.histories[0].created) > moment().startOf('day')
+    ) {
       workingTime = getWorkingMinute(
         this.props.histories[0].in,
         this.props.histories[0].out || moment().format('HH:mm')

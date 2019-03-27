@@ -4,12 +4,8 @@ import { connect } from 'react-redux';
 import M from 'materialize-css';
 import Loader from 'react-loader-spinner';
 import './Manager.scss';
-import { ProfileBox } from 'components';
-import {
-  getCurrentStatus,
-  statusCodeToMsg,
-  statusCodeToColor
-} from 'utils/history';
+import { ProfileBox, Thumbnail } from 'components';
+import { getCurrentStatus } from 'utils/history';
 
 class Manager extends Component {
   state = {
@@ -191,34 +187,6 @@ function getInNOutInfo(data) {
     }
   }
   return { beforeIn, afterIn, tardy, early, out, lack, tardyearly };
-}
-
-function Thumbnail(props) {
-  let statusCode = getCurrentStatus(
-    props.info.employee_info,
-    props.info.histories
-  );
-  let status = statusCodeToMsg(statusCode);
-  let color = statusCodeToColor(statusCode);
-  return (
-    <div className="thumbnail-wrapper">
-      <div className="thumbnail">
-        <a onClick={props.onClick}>
-          <img
-            id={props.index}
-            src={`/profile/${props.info.username}`}
-            alt="thumbnail"
-          />
-        </a>
-      </div>
-      <div className="username center" title={props.info.username}>
-        {props.info.username}
-      </div>
-      <div className="status center">
-        <span className={color}>{status}</span>
-      </div>
-    </div>
-  );
 }
 
 const mapStateToProps = state => ({

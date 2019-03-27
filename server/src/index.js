@@ -5,8 +5,13 @@ import session from "express-session";
 import path from "path";
 import mongoose from "mongoose";
 import api from "./routes";
-
+import http from "http";
+import socketio from "socket.io";
+import chatSocket from "./socket/chat";
 const app = express();
+const server = http.createServer(app);
+const io = socketio.listen(server);
+chatSocket(io);
 
 /* SUPPORT CLIENT SIDE RENDERING */
 app.use("/profile", express.static(path.join(__dirname, "../upload/profile")));
@@ -51,6 +56,6 @@ app.use((err, req, res, next) => {
 });
 
 /* SERVER START */
-app.listen(3400, () => console.log("Server is listening on port 3400)"));
+server.listen(3400, () => console.log("Server is listening on port 3400)"));
 
 module.exports = app;

@@ -20,11 +20,11 @@
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
-    "react-timeago": "^4.4.0",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-thunk": "^2.3.0",
     "sass-loader": "^7.1.0",
+    "socket.io-client": "^2.2.0",
     "timepicker": "^1.11.14"
   },
   "scripts": {

@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import fs from "fs";
 import Account from "../models/account";
+import Room from "../models/room";
 
 const router = express.Router();
 
@@ -101,7 +102,10 @@ router.post("/register", async (req, res) => {
     //CHECK IP FORMAT
     const ipRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
 
-    if (typeof req.body.ip !== "string" || !ipRegex.test(req.body.ip)) {
+    if (
+      typeof req.body.ip !== "string" ||
+      (req.body.ip !== "" && !ipRegex.test(req.body.ip))
+    ) {
       return res.status(400).json({
         property: "ip",
         msg: "올바르지 못한 아이피"
@@ -116,12 +120,22 @@ router.post("/register", async (req, res) => {
       ip: req.body.ip
     });
 
+    //CREATE ROOM
+    const newRoom = new Room({
+      manager: req.body.username,
+      members: [{ username: req.body.username }],
+      messages: []
+    });
+
     newAccount.password = newAccount.generateHash(newAccount.password);
 
     //SAVE IN THE DATABASE
     newAccount.save(err => {
       if (err) throw err;
-      return res.json({ success: true });
+      newRoom.save(error => {
+        if (error) throw error;
+        return res.json({ success: true });
+      });
     });
     return;
   }
@@ -231,10 +245,17 @@ router.post("/register", async (req, res) => {
   newAccount.password = newAccount.generateHash(newAccount.password);
 
   //SAVE IN THE DATABASE
-  newAccount.save(err => {
-    if (err) throw err;
-    return res.json({ success: true });
-  });
+  try {
+    await newAccount.save();
+    console.log(manager.username);
+    await Room.updateOne(
+      { manager: manager.username },
+      { $push: { members: { username: req.body.username } } }
+    );
+  } catch (error) {
+    throw error;
+  }
+  return res.json({ success: true });
 });
 
 router.post("/login", async (req, res) => {
@@ -264,11 +285,23 @@ router.post("/login", async (req, res) => {
   }
 
   //CHECK PASSWORD CORRECT
-
   if (!account.validateHash(req.body.password)) {
     return res.status(401).json({
       msg: "비밀번호 불일치",
       property: "password"
+    });
+  }
+
+  //CHECK IP
+  console.log(process.env.NODE_ENV);
+  if (
+    process.env.NODE_ENV === "production" &&
+    account.ip !== "" &&
+    account.ip !==
+      (req.headers["x-forwarded-for"] || req.connection.remoteAddress)
+  ) {
+    return res.status(401).json({
+      msg: "관리자가 설정한 아이피와 다름"
     });
   }
 

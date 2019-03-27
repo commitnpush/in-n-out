@@ -260,8 +260,9 @@ function InputBox({
         />
       </div>
       <div className="input-field col s12 username">
-        <label>아이디</label>
+        <label htmlFor="input_id">아이디</label>
         <input
+          id="input_id"
           name="username"
           type="text"
           className="validate"
@@ -269,8 +270,9 @@ function InputBox({
         />
       </div>
       <div className="input-field col s12">
-        <label>비밀번호</label>
+        <label htmlFor="input_password">비밀번호</label>
         <input
+          id="input_password"
           name="password"
           type="password"
           className="validate"
@@ -279,8 +281,9 @@ function InputBox({
         />
       </div>
       <div className="input-field col s12">
-        <label>비밀번호 재입력</label>
+        <label htmlFor="input_password_check">비밀번호 재입력</label>
         <input
+          id="input_password_check"
           name="password_check"
           type="password"
           className="validate"
@@ -322,10 +325,12 @@ function InputBox({
         />
       ) : (
         <div className="input-field col s12 ip">
-          <label>
-            아이피 주소 : <small>직원 로그인시 체크할 주소</small>
+          <label htmlFor="input_ip">
+            아이피 주소 :{' '}
+            <small>직원 로그인시 체크할 주소, 미입력시 체크안함</small>
           </label>
           <input
+            id="input_ip"
             name="ip"
             type="text"
             className="validate"
@@ -341,8 +346,11 @@ function EmployeeBox({ is_free, onIsFreeChange, onChange, in_time, out_time }) {
   const nonFreeBox = (
     <div className="left-align">
       <div className="input-field col s6">
-        <label className="active">출근시간</label>
+        <label className="active" htmlFor="input_in">
+          출근시간
+        </label>
         <input
+          id="input_in"
           name="in"
           type="text"
           className="timepicker"
@@ -351,8 +359,11 @@ function EmployeeBox({ is_free, onIsFreeChange, onChange, in_time, out_time }) {
         />
       </div>
       <div className="input-field col s6">
-        <label className="active">퇴근시간</label>
+        <label className="active" htmlFor="input_out">
+          퇴근시간
+        </label>
         <input
+          id="input_out"
           name="out"
           type="text"
           className="timepicker"
@@ -365,10 +376,11 @@ function EmployeeBox({ is_free, onIsFreeChange, onChange, in_time, out_time }) {
 
   const freeBox = (
     <div className="input-field col s12">
-      <label>
+      <label htmlFor="input_duty">
         근무시간 <small>단위 : 분</small>
       </label>
       <input
+        id="input_duty"
         name="duty"
         type="number"
         max="1200"
@@ -381,8 +393,9 @@ function EmployeeBox({ is_free, onIsFreeChange, onChange, in_time, out_time }) {
   return (
     <div>
       <div className="input-field manager col s12">
-        <label>관리자 아이디</label>
+        <label htmlFor="input_manager">관리자 아이디</label>
         <input
+          id="input_manager"
           name="manager"
           type="text"
           className="validate"

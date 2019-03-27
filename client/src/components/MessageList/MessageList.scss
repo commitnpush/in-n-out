@@ -1,0 +1,12 @@
+.messages {
+  flex-grow: 1;
+  overflow: scroll;
+  padding: 15px;
+  .thumbnail-wrapper {
+    padding: 0;
+    .thumbnail {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}

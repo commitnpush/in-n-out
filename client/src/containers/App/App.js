@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { Header } from 'components';
-import { Manager, Employee, Login, Register } from 'containers';
+import { Manager, Employee, Login, Register, Chat } from 'containers';
 import { connect } from 'react-redux';
 import { logoutRequest, infoRequest } from 'modules/auth';
 import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
+import Loader from 'react-loader-spinner';
 
 class App extends Component {
   _handleLogout = () => {
@@ -79,6 +80,8 @@ class App extends Component {
     const isAuthPage = /(\/register)|(\/login)/.test(
       this.props.location.pathname
     );
+    if (info.status === 'INIT' || info.status === 'WAITING') {
+    }
     return (
       <div>
         {!isAuthPage && (
@@ -89,6 +92,20 @@ class App extends Component {
         )}
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route
+          exact
+          path="/chat"
+          component={props => {
+            if (info.status === 'INIT' || info.status === 'WAITING') {
+              return (
+                <div className="loading-spinner">
+                  <Loader type="Oval" color="#26a69a" height="50" width="50" />
+                </div>
+              );
+            }
+            return <Chat {...props} />;
+          }}
+        />
       </div>
     );
   }
