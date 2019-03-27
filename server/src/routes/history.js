@@ -24,7 +24,10 @@ router.get("/", async (req, res) => {
 
   //처음 로그인 하거나 최근 히스토리가 오늘날짜가 아닐경우
 
-  if (historys.length === 0 || !isToday(historys[0].created)) {
+  if (
+    historys.length === 0 ||
+    moment(historys[0].created) < moment().startOf("day")
+  ) {
     const newHistory = new History({
       username: req.session.loginInfo.username,
       in: "",
@@ -51,13 +54,14 @@ router.put("/in", async (req, res) => {
       msg: "세션 만료 - 로그인 후 이용 가능."
     });
   }
-  const today = new Date();
-  const inTime = getTimeString(today);
+  const inTime = moment().format("HH:mm");
   await History.updateOne(
     {
       username: req.session.loginInfo.username,
       created: {
-        $gt: new Date(today.getFullYear(), today.getMonth(), today.getDate())
+        $gt: moment()
+          .startOf("day")
+          .valueOf()
       }
     },
     { in: inTime }
@@ -73,13 +77,14 @@ router.put("/out", async (req, res) => {
       msg: "세션 만료 - 로그인 후 이용 가능."
     });
   }
-  const today = new Date();
-  const outTime = getTimeString(today);
+  const outTime = moment().format("HH:mm");
   await History.updateOne(
     {
       username: req.session.loginInfo.username,
       created: {
-        $gt: new Date(today.getFullYear(), today.getMonth(), today.getDate())
+        $gt: moment()
+          .startOf("day")
+          .valueOf()
       }
     },
     { out: outTime }
@@ -88,18 +93,5 @@ router.put("/out", async (req, res) => {
     out: outTime
   });
 });
-
-function getTimeString(date) {
-  const hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-  const minute =
-    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-  return `${hour}:${minute}`;
-}
-function isToday(date) {
-  return (
-    moment(date) >= moment().startOf("day") &&
-    moment(date) <= moment().endOf("day")
-  );
-}
 
 export default router;

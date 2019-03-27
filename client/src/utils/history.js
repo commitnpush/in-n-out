@@ -90,11 +90,6 @@ export function getCurrentStatus(employee_info, histories) {
 
   //퇴근버튼 누름
 
-  //출근은 했지만 출근시간보다 출근해야하는 시간이 이전 -> 지각
-  if (moment(lastHistory.in, 'HH:mm') > moment(employee_info.in, 'HH:mm')) {
-    return 2;
-  }
-
   //자율출퇴근
   if (employee_info.is_free) {
     //일한시간이 일해야하는 시간보다 큼 -> 퇴근
@@ -107,7 +102,10 @@ export function getCurrentStatus(employee_info, histories) {
     //부족
     return 4;
   }
-
+  //출근은 했지만 출근시간보다 출근해야하는 시간이 이전 -> 지각
+  if (moment(lastHistory.in, 'HH:mm') > moment(employee_info.in, 'HH:mm')) {
+    return 2;
+  }
   //퇴근시간이 퇴근해야하는 시간보다 이후 -> 퇴근
   if (moment(lastHistory.out, 'HH:mm') >= moment(employee_info.out, 'HH:mm')) {
     return 6;

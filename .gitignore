@@ -5,3 +5,5 @@ server/node_modules
 yarn-error.log
 server/upload
 !server/upload/defualt.png
+.env.production.local
+.env.development

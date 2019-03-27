@@ -296,6 +296,7 @@ router.post("/login", async (req, res) => {
   console.log(process.env.NODE_ENV);
   if (
     process.env.NODE_ENV === "production" &&
+    !account.type &&
     account.ip !== "" &&
     account.ip !==
       (req.headers["x-forwarded-for"] || req.connection.remoteAddress)

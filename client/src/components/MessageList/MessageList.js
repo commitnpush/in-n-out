@@ -18,7 +18,7 @@ class MessageList extends Component {
         prevDate = v.created;
         return (
           <Message
-            key={i}
+            key={v._id}
             message={v}
             username={this.props.username}
             isNewDate={isNewDate}

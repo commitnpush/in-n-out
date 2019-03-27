@@ -43,10 +43,10 @@ export default function(io) {
 
     //메세지 전송
     socket.on("send", async data => {
-      io.sockets.in(managerName).emit("send", data);
       const room = await Room.findOne({ manager: managerName });
       room.messages.unshift(data);
-      room.save();
+      io.sockets.in(managerName).emit("send", room.messages[0]);
+      await room.save();
     });
 
     //퇴장
@@ -62,7 +62,7 @@ export default function(io) {
       room.save();
 
       //소켓 그룹핑 해제
-      socket.join(managerName);
+      socket.leave(managerName);
 
       //입장해 있는 회원들에게 입장한사람의 이름 알려줘서 status변경하게 하기
       io.sockets.in(managerName).emit("leave", data);
@@ -71,10 +71,10 @@ export default function(io) {
 
     //메세지 추가로딩
     socket.on("more", async data => {
+      console.log(data);
       const room = await Room.findOne({
         manager: data.manager
-      }).slice("messages", [data.index]);
-      //console.log(room.messages);
+      }).slice("messages", [data.index, 10]);
       socket.emit("more", room.messages);
     });
   });

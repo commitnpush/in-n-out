@@ -95,7 +95,6 @@ class Chat extends Component {
     });
   };
   _initSocket = () => {
-    console.log(process.env.REACT_APP_SOCKET_HOST);
     this.socket = socketio.connect(process.env.REACT_APP_SOCKET_HOST);
     this.socket.emit('room', {
       username: this.props.info.username,
@@ -107,12 +106,10 @@ class Chat extends Component {
         if (moment(a.created) < moment(b.created)) return -1;
         return 0;
       });
-      console.log('room start');
       this.setState({ room: data }, () => {
         //스크롤 제일 아래로
         const messagesDiv = document.getElementById('messages');
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        console.log('room stop');
       });
     });
     this.socket.on('send', data => {
@@ -164,7 +161,6 @@ class Chat extends Component {
     });
     this.socket.on('more', data => {
       //더 가져올 메세지가 없으면 리턴 -> loading은 계속 true이기에 계속 안가져옴
-
       if (data.length === 0) return;
       const messagesDiv = document.getElementById('messages');
       let beforeScrollHeight = messagesDiv.scrollHeight;
