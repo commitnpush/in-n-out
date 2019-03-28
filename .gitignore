@@ -3,7 +3,8 @@ client/build
 server/node_modules
 
 yarn-error.log
-server/upload/profile
+server/upload/profile/*
 !server/upload/profile/default.png
 .env.production.local
 .env.development
+client/package-lock.json
