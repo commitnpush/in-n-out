@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import M from 'materialize-css';
 import Loader from 'react-loader-spinner';
 import './Manager.scss';
-import { ProfileBox, Thumbnail } from 'components';
+import { Clock, ProfileBox, Thumbnail } from 'components';
 import { getCurrentStatus } from 'utils/history';
 
 class Manager extends Component {
@@ -70,7 +70,8 @@ class Manager extends Component {
     const total = data.length;
     const inNOutInfo = getInNOutInfo(data);
     return (
-      <div className="mt-70 container">
+      <div className="mt-70 container center">
+        <Clock />
         <div className="row">
           {/* 오늘의 출퇴근 요약 */}
           <div className="col s12 m12 l6">

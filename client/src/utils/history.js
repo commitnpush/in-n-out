@@ -53,8 +53,16 @@ export function getCurrentStatus(employee_info, histories) {
   //부족 - 4;
   //퇴근 - 5;
 
-  //입사 후 한번도 로그인 안함 -> 출근 전
+  //입사 후 한번도 로그인 안함
   if (histories.length === 0) {
+    //일반출퇴근이고 출근해야하는 시간이 현재시간보다 전이면 지각
+    if (
+      !employee_info.is_free &&
+      moment(employee_info.in, 'HH:mm') < moment()
+    ) {
+      return 2;
+    }
+
     return 0;
   }
   var lastHistory = histories[0];
@@ -102,16 +110,19 @@ export function getCurrentStatus(employee_info, histories) {
     //부족
     return 4;
   }
-  //출근은 했지만 출근시간보다 출근해야하는 시간이 이전 -> 지각
-  if (moment(lastHistory.in, 'HH:mm') > moment(employee_info.in, 'HH:mm')) {
-    return 2;
-  }
-  //퇴근시간이 퇴근해야하는 시간보다 이후 -> 퇴근
-  if (moment(lastHistory.out, 'HH:mm') >= moment(employee_info.out, 'HH:mm')) {
+
+  const isTardy =
+    moment(lastHistory.in, 'HH:mm') > moment(employee_info.in, 'HH:mm');
+  const isEarly =
+    moment(lastHistory.out, 'HH:mm') < moment(employee_info.out, 'HH:mm');
+  //지각도 안했으면서 퇴근시간이 퇴근해야하는 시간보다 이후 -> 퇴근
+  if (!isTardy && !isEarly) {
     return 6;
   }
-  //이미 지각 + 조퇴
-  if (moment(lastHistory.in, 'HH:mm') > moment(employee_info.in, 'HH:mm')) {
+  if (isTardy && !isEarly) {
+    return 2;
+  }
+  if (isTardy && isEarly) {
     return 5;
   }
   //조퇴

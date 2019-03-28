@@ -107,7 +107,7 @@ class Chat extends Component {
         return 0;
       });
       this.setState({ room: data }, () => {
-        //스크롤 제일 아래로
+        //스크롤 제일 아래
         const messagesDiv = document.getElementById('messages');
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
       });
@@ -160,8 +160,8 @@ class Chat extends Component {
       );
     });
     this.socket.on('more', data => {
-      //더 가져올 메세지가 없으면 리턴 -> loading은 계속 true이기에 계속 안가져옴
-      if (data.length === 0) return;
+      //더 가져올 메세지가 10개 미만이면 리 -> loading은 계속 true이기에 계속 안가져옴
+      if (data.length < 10) return;
       const messagesDiv = document.getElementById('messages');
       let beforeScrollHeight = messagesDiv.scrollHeight;
       this.setState(
@@ -179,6 +179,10 @@ class Chat extends Component {
           });
         }
       );
+    });
+    this.socket.on('exit', data => {
+      this.socket = null;
+      //
     });
   };
   _disconnectSocket = () => {

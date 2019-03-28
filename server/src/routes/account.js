@@ -43,7 +43,6 @@ router.post("/upload", upload.single("profile_img"), (req, res) => {
 */
 
 router.post("/register", async (req, res) => {
-  console.log(req.body.account);
   req.body = req.body.account;
 
   //CHECK USERNAME FORMAT
@@ -247,7 +246,6 @@ router.post("/register", async (req, res) => {
   //SAVE IN THE DATABASE
   try {
     await newAccount.save();
-    console.log(manager.username);
     await Room.updateOne(
       { manager: manager.username },
       { $push: { members: { username: req.body.username } } }
@@ -293,13 +291,15 @@ router.post("/login", async (req, res) => {
   }
 
   //CHECK IP
-  console.log(process.env.NODE_ENV);
   if (
     process.env.NODE_ENV === "production" &&
     !account.type &&
     account.ip !== "" &&
     account.ip !==
-      (req.headers["x-forwarded-for"] || req.connection.remoteAddress)
+      (req.headers["x-forwarded-for"] || req.connection.remoteAddress).replace(
+        /^:.*:$/,
+        ""
+      )
   ) {
     return res.status(401).json({
       msg: "관리자가 설정한 아이피와 다름"

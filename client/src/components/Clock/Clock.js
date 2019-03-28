@@ -8,13 +8,13 @@ class Clock extends Component {
   };
   interval = null;
   componentDidMount() {
-    this.nterval = setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({
         time: moment().format('HH : mm : ss')
       });
     }, 1000);
   }
-  componentWillUnount() {
+  componentWillUnmount() {
     clearInterval(this.interval);
   }
   render() {

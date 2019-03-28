@@ -1,6 +1,7 @@
 import express from "express";
 import Account from "../models/account";
 import History from "../models/history";
+import Room from "../models/room";
 import moment from "moment";
 const router = express();
 
@@ -223,6 +224,24 @@ router.put("/employee", async (req, res) => {
       throw error;
     }
   }
+
+  //room 정보수정
+  if (loginInfo.username !== employee.employee_info.manager) {
+    const beforeRoom = await Room.findOne({ manager: loginInfo.username });
+    const member = beforeRoom.members.find(
+      e => e.username === employee.username
+    );
+    console.log(member.toString());
+    //새로운 방에 추가
+    const afterRoom = await Room.findOne({
+      manager: employee.employee_info.manager
+    });
+    beforeRoom.members.pull({ _id: member._id });
+    beforeRoom.save();
+    afterRoom.members.push(member);
+    afterRoom.save();
+  }
+
   res.json({
     success: true,
     updateType: loginInfo.username === employee.employee_info.manager
