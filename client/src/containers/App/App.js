@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import { Header } from 'components';
+import { Route, Switch } from 'react-router-dom';
+import { Header, NotFound } from 'components';
 import { Manager, Employee, Login, Register, Chat } from 'containers';
 import { connect } from 'react-redux';
 import { logoutRequest, infoRequest } from 'modules/auth';
@@ -17,7 +17,7 @@ class App extends Component {
         calsses: 'success'
       });
       document.cookie = 'key=' + btoa(JSON.stringify(false));
-      this._checkSession();
+      this.props.history.push('/');
     });
   };
 
@@ -39,7 +39,6 @@ class App extends Component {
 
     //처음 사이트 접속 또는 쿠키 삭제시 -> 로그인페이지로 이동
     if (typeof isLoggedIn === 'undefined') {
-      this.props.history.push('/login');
       return;
     }
 
@@ -51,8 +50,6 @@ class App extends Component {
         this.props.history.push('/register');
         return;
       }
-      //아닐경우 모두 로그인페이지로 이동
-      this.props.history.push('/login');
       return;
     }
 
@@ -67,7 +64,7 @@ class App extends Component {
           displayTime: 1000,
           calsses: 'error'
         });
-        this.props.history.push('/login');
+        this.props.history.push('/');
       }
     });
   };
@@ -80,32 +77,48 @@ class App extends Component {
     const isAuthPage = /(\/register)|(\/login)/.test(
       this.props.location.pathname
     );
-    if (info.status === 'INIT' || info.status === 'WAITING') {
+    if (info.status === 'WAITING') {
+      return (
+        <div className="loading-spinner">
+          <Loader type="Oval" color="#26a69a" height="50" width="50" />
+        </div>
+      );
+    }
+    if (info.status === 'INIT') {
+      return (
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route component={NotFound} />
+        </Switch>
+      );
     }
     return (
       <div>
-        {!isAuthPage && (
-          <Header isLoggedIn={info.isLoggedIn} onLogout={this._handleLogout} />
-        )}
-        {info.status !== 'INIT' && info.status !== 'WAITING' && (
+        {!isAuthPage && <Header onLogout={this._handleLogout} />}
+        <Switch>
           <Route exact path="/" component={info.type ? Manager : Employee} />
-        )}
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route
-          exact
-          path="/chat"
-          component={props => {
-            if (info.status === 'INIT' || info.status === 'WAITING') {
-              return (
-                <div className="loading-spinner">
-                  <Loader type="Oval" color="#26a69a" height="50" width="50" />
-                </div>
-              );
-            }
-            return <Chat {...props} />;
-          }}
-        />
+          <Route
+            exact
+            path="/chat"
+            component={props => {
+              if (info.status === 'INIT' || info.status === 'WAITING') {
+                return (
+                  <div className="loading-spinner">
+                    <Loader
+                      type="Oval"
+                      color="#26a69a"
+                      height="50"
+                      width="50"
+                    />
+                  </div>
+                );
+              }
+              return <Chat {...props} />;
+            }}
+          />
+          <Route component={NotFound} />
+        </Switch>
       </div>
     );
   }

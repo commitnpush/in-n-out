@@ -205,10 +205,8 @@ export default handleActions(
     //LOGOUT
     [LOGOUT]: (state, action) => {
       return update(state, {
-        login: {
-          status: { $set: 'INIT' }
-        },
         info: {
+          status: { $set: 'INIT' },
           isLoggedIn: { $set: false },
           username: { $set: '' },
           type: { $set: false }

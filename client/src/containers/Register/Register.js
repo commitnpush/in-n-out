@@ -163,7 +163,7 @@ class Register extends Component {
         <span className="logo">IN & OUT</span>
         <div className="card">
           <div className="back">
-            <Link to="/login">
+            <Link to="/">
               <i className="material-icons back">keyboard_backspace</i>
             </Link>
           </div>

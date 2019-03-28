@@ -80,7 +80,7 @@ class Manager extends Component {
                   <span>Summary</span>
                 </div>
                 <div className="summary">
-                  <table className="centered">
+                  <table className="centered responsive">
                     <thead>
                       <tr>
                         <th>총원</th>

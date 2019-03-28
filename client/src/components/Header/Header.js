@@ -18,16 +18,6 @@ class Header extends Component {
             <div className={cx('right')}>
               <ul>
                 <li>
-                  <a>
-                    <i
-                      className={cx('material-icons', 'search-icon')}
-                      onClick={this.toggleSearch}
-                    >
-                      search
-                    </i>
-                  </a>
-                </li>
-                <li>
                   <Link to="/chat">
                     <i
                       className={cx('material-icons', 'search-icon')}
@@ -52,12 +42,10 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  isLoggedIn: PropTypes.bool,
   onLogout: PropTypes.func
 };
 
 Header.defaultProps = {
-  isLoggedIn: false,
   onLogout: () => console.error('onLogout function is not defined')
 };
 

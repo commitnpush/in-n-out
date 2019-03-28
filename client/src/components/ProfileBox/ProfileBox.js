@@ -248,7 +248,7 @@ class ProfileBox extends Component {
         <div className="card-row">
           <div className="title">Information</div>
           <div className="content">
-            <table className="centered">
+            <table className="centered responsive">
               <thead>
                 {this.props.info.employee_info.is_free ? (
                   <tr>
@@ -305,7 +305,7 @@ class ProfileBox extends Component {
         <div className="card-row">
           <div className="title">This week</div>
           <div className="content">
-            <table className="centered">
+            <table className="centered responsive">
               <thead>
                 <tr>
                   <th>Mon</th>
@@ -338,7 +338,7 @@ class ProfileBox extends Component {
         <div className="card-row">
           <div className="title">Information</div>
           <div className="content">
-            <table className="centered">
+            <table className="centered responsive">
               <thead>
                 {this.props.info.employee_info.is_free ? (
                   <tr>
@@ -442,14 +442,14 @@ class ProfileBox extends Component {
               </tbody>
             </table>
           </div>
-        </div>
-        <div className="card-action">
-          <a
-            className="waves-effect waves-light btn"
-            onClick={this._handleEmployeeEdit}
-          >
-            수정
-          </a>
+          <div className="footer">
+            <a
+              className="waves-effect waves-light btn"
+              onClick={this._handleEmployeeEdit}
+            >
+              수정
+            </a>
+          </div>
         </div>
       </div>
     );
