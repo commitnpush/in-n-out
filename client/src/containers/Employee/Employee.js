@@ -26,7 +26,6 @@ class Employee extends Component {
     });
   };
   componentDidMount() {
-    console.log('here');
     this.props.historyRequest(this.props.info.username).then(() => {
       if (this.props.history.status === 'FAILURE') {
         M.toast({ html: this.props.history.error.msg });

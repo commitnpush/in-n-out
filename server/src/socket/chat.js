@@ -71,7 +71,6 @@ export default function(io) {
 
     //메세지 추가로딩
     socket.on("more", async data => {
-      console.log(data);
       const room = await Room.findOne({
         manager: data.manager
       }).slice("messages", [data.index, 10]);

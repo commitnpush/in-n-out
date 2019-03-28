@@ -101,7 +101,7 @@ class Register extends Component {
               displayLength: 1000,
               classes: 'success'
             });
-            this.props.history.push('/login');
+            this.props.history.push('/');
           })
           .catch(error => {
             M.toast({
