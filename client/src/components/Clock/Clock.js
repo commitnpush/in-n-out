@@ -18,7 +18,7 @@ class Clock extends Component {
     clearInterval(this.interval);
   }
   render() {
-    return <div className="clock">{this.state.time}</div>;
+    return <div className="clock center">{this.state.time}</div>;
   }
 }
 

@@ -70,7 +70,7 @@ class Manager extends Component {
     const total = data.length;
     const inNOutInfo = getInNOutInfo(data);
     return (
-      <div className="mt-70 container center">
+      <div className="mt-70 container">
         <Clock />
         <div className="row">
           {/* 오늘의 출퇴근 요약 */}

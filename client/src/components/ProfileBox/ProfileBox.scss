@@ -1,6 +1,10 @@
 @import "utils";
 $break-small: 600px;
 .profile-box {
+  .more {
+    i.material-icons {
+    }
+  }
   margin: 0 auto;
   .refresh {
     position: absolute;
@@ -11,6 +15,12 @@ $break-small: 600px;
       color: $oc-gray-6;
       &:hover {
         color: black;
+      }
+    }
+    @media (max-width: 600px) {
+      right: 70px !important;
+      i {
+        font-size: 2rem !important;
       }
     }
   }
@@ -26,6 +36,12 @@ $break-small: 600px;
         color: black;
       }
     }
+    @media (max-width: 600px) {
+      right: 41px !important;
+      i {
+        font-size: 1.75rem !important;
+      }
+    }
   }
   .close {
     position: absolute;
@@ -37,6 +53,12 @@ $break-small: 600px;
       color: $oc-gray-6;
       &:hover {
         color: black;
+      }
+    }
+    @media (max-width: 600px) {
+      i {
+        padding-top: 0px;
+        font-size: 2.1rem !important;
       }
     }
   }
@@ -60,6 +82,9 @@ $break-small: 600px;
       border-radius: 50%;
       overflow: hidden;
       box-shadow: 0 2px 4px 2px gray;
+      &:hover {
+        box-shadow: 0 2px 4px 2px grey;
+      }
       .centered {
         position: absolute;
         top: 0;
@@ -137,6 +162,9 @@ $break-small: 600px;
   }
   .content {
     padding: 10px 20px 0 20px;
+    @media (max-width: 600px) {
+      padding: 10px 0;
+    }
     table {
       th,
       td {
@@ -148,10 +176,16 @@ $break-small: 600px;
       }
       td {
         font-weight: 100;
+
         span.status {
           padding: 5px 10px;
           border-radius: 10px;
           color: white;
+          @media (max-width: 600px) {
+            padding: 3px 6px;
+            font-size: 1rem;
+            border-radius: 6px;
+          }
         }
       }
       tbody tr {

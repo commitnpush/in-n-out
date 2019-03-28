@@ -326,8 +326,7 @@ function InputBox({
       ) : (
         <div className="input-field col s12 ip">
           <label htmlFor="input_ip">
-            아이피 주소 :{' '}
-            <small>직원 로그인시 체크할 주소, 미입력시 체크안함</small>
+            아이피 주소 :<small>로그인시 확인, 미입력시 확인X</small>
           </label>
           <input
             id="input_ip"

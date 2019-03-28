@@ -180,10 +180,6 @@ class Chat extends Component {
         }
       );
     });
-    this.socket.on('exit', data => {
-      this.socket = null;
-      //
-    });
   };
   _disconnectSocket = () => {
     this.socket.emit('leave', this.state.username);

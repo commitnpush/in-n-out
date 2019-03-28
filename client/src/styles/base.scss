@@ -67,6 +67,9 @@ textarea.materialize-textarea.valid:focus,
 }
 
 @media only screen and (max-width: 600px) {
+  .card-content {
+    padding: 15px !important;
+  }
   table.responsive {
     width: 100%;
     border-collapse: collapse;
@@ -106,6 +109,7 @@ textarea.materialize-textarea.valid:focus,
       display: block;
       width: auto;
       position: relative;
+      overflow-x: auto;
       white-space: nowrap;
       tr {
         display: inline-block;
@@ -120,6 +124,7 @@ textarea.materialize-textarea.valid:focus,
       padding: 0 10px;
     }
     th {
+      font-size: 1rem !important;
       margin: 0;
       display: block;
       text-align: right;
@@ -128,7 +133,15 @@ textarea.materialize-textarea.valid:focus,
       display: block;
       min-height: 1.25em;
       margin: 0;
-      height: 55px;
+      height: 51px;
+      line-height: 51px;
+      padding: 0 5px;
+      text-align: left !important;
+      font-size: 1rem !important;
+      input {
+        font-size: 1rem !important;
+        margin-bottom: 0px !important;
+      }
     }
   }
 }

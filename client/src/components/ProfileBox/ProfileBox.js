@@ -462,7 +462,7 @@ class ProfileBox extends Component {
               <a
                 className="refresh"
                 onClick={this.props.onRefresh}
-                title="새로고침"
+                title="로고침"
               >
                 <i className="material-icons">refresh</i>
               </a>
