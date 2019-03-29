@@ -297,7 +297,7 @@ router.post("/login", async (req, res) => {
     account.ip !== "" &&
     account.ip !==
       (req.headers["x-forwarded-for"] || req.connection.remoteAddress).replace(
-        /^:.*:$/,
+        /:.*:/,
         ""
       )
   ) {

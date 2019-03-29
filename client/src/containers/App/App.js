@@ -84,7 +84,7 @@ class App extends Component {
         </div>
       );
     }
-    if (info.status === 'INIT') {
+    if (info.status === 'INIT' || info.status === 'FAILURE') {
       return (
         <Switch>
           <Route exact path="/" component={Login} />

@@ -49,6 +49,7 @@ input[name="out"] {
 .upload-box {
   .thumbnail-wrapper {
     width: 30%;
+    min-width: 90px;
     margin: 0 auto;
     .thumbnail {
       width: 100%;
@@ -70,7 +71,7 @@ input[name="out"] {
           position: absolute;
           top: 0;
           left: 0;
-          max-width: 100%;
+          width: 100%;
           height: auto;
           -webkit-transform: translate(-50%, -50%);
           -ms-transform: translate(-50%, -50%);

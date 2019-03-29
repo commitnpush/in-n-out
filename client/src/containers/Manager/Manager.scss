@@ -22,7 +22,8 @@
     box-shadow: 0 2px 4px 2px gray;
     margin-bottom: 10px;
     img {
-      max-width: 100%;
+      width: 100%;
+      min-height: 100%;
     }
     &:hover {
       box-shadow: 0 2px 5px 3px teal;
